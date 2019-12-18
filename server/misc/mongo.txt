@@ -1,0 +1,7 @@
+> mongo
+> use beacon-db
+> db.createCollection("featureboundaries")
+> db.createCollection("recordpreviewclicks")
+> db.createCollection("searchsuggestionclicks")
+
+

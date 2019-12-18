@@ -1,9 +1,8 @@
 let mongoose =  require('mongoose');
-
-const DB_URL = "mongodb://localhost:27017/beacon-db"
+let appConstants  = require('../constants');
 
 const connectDb = () => {
-    return mongoose.connect(DB_URL);
+    return mongoose.connect(appConstants.DB_URL);
 }
 
 module.exports = connectDb;

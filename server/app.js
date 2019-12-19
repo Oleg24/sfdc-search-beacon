@@ -6,7 +6,7 @@ let dbConnection;
 
 // only needed for seeding 
 let seedFeatureBoundary = require('./misc/seedFeatureBoundary');
-let seedRecordPreviewClicks = require('./misc/seedRecordPreviewClicks');
+let seedClicks = require('./misc/seedClicks');
 
 // services
 let getClickHeatMapData = require('./services/clickHeatMapDataService');
@@ -39,7 +39,9 @@ connectDb().then((db, err) => {
     dbConnection = db;
     // Uncomment the following if you need to seed either collection
     // seedFeatureBoundary();
-    // seedRecordPreviewClicks();
+    seedClicks('recordPreview');
+    seedClicks('leftNav');
+    seedClicks('searchSuggestions')
     app.listen(port, ()=> {
         console.log("SFDC Beacon app listening at port: ", port);
     });

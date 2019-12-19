@@ -73,12 +73,17 @@
         if(currentRegion === region){
             return; 
         }
+
         // clear whatever is on the right 
         const heatmapContainer = document.getElementById('heatmapContainer');
         heatmapContainer.innerHTML = "";
+        // hide the about 
+        $('#about-container').hide();
 
         // if about, show about 
-            // TODO handle the about logic
+        if(region === 'about'){
+            showAboutRegion();
+        }
 
         // add spinner
         // fetch data for the region
@@ -110,8 +115,8 @@
         $('#heatmapContainer').width(width);
     }
 
-    function createAbout(){
-
+    function showAboutRegion(){
+        $('#about-container').show();
     }
 
     init();

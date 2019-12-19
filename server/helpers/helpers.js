@@ -1,5 +1,19 @@
 var cluster = require('set-clustering');
 
+// normalize respective to 0,0
+function normalizeData(data, boundaries){
+    console.log('topLeftX', boundaries.topLeftX);
+    console.log('topLeftY', boundaries.topLeftY);
+    return data.map(function(point){
+        // point - { x, y, value, windowWidth, windowHeight }
+        var normalizedPoint = Object.assign(point, {
+            x: point.x - boundaries.topLeftX,
+            y: point.y - boundaries.topLeftY,
+        });
+        return normalizedPoint;
+    });
+}
+
 function proximity(pointA, pointB){
     var pixelProximity = 5;
     var score = 0;
@@ -54,5 +68,6 @@ function clusterDataPoints(data){
 //     });
 // }
 
-
-module.exports = clusterDataPoints;
+module.exports = {
+    normalizeData
+};

@@ -1,5 +1,7 @@
 let RecordPreviewClicks = require('../models/recordPreviewClicks');
 let SearchSuggestionClicks = require('../models/searchSuggestionClicks');
+let FeatureBoundary = require('../models/featureBoundary');
+let helpers = require('../helpers/helpers');
 
 const regionCollectionMap = {
     'recordPreview': RecordPreviewClicks,
@@ -14,7 +16,11 @@ function getClickHeatMapData(req, res){
         res.send("no heat map for this region")
     } else {
         collection.find({}, function(err, clickData){
-            res.send(clickData);
+            FeatureBoundary.find({ featureName: region }, 'topLeftX topLeftY', function(err, boundaries){
+                var normalizedData = helpers.normalizeData(clickData, boundaries[0]);
+                res.send(normalizedData);
+            });
+            
         });
     }
 }

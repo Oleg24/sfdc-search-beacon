@@ -3,7 +3,7 @@ let SearchSuggestionClicks = require('../models/searchSuggestionClicks');
 
 const regionCollectionMap = {
     'recordPreview': RecordPreviewClicks,
-    'searchSuggestions': SearchSuggestionClicks
+    'searchSuggestions': SearchSuggestionClicks,
 };
 
 function getClickHeatMapData(req, res){

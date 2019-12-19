@@ -3,14 +3,34 @@ let FeatureBoundary = require('../models/featureBoundary');
 function seedFeatureBoundary(){
     const featureBoundaryData = [{
         featureName: 'recordPreview',
-        topLeftX: 580,
-        topLeftY: 105,
+        topLeftX: 581,
+        topLeftY: 50,
         topRightX: 980,
-        topRightY: 105,
-        bottomLeftX: 580,
-        bottomLeftY: 1190,
+        topRightY: 50,
+        bottomLeftX: 585,
+        bottomLeftY: 555,
         bottomRightX: 980,
-        bottomRightY: 1190 
+        bottomRightY: 555 
+    }, {
+        featureName: 'searchSuggestions',
+        topLeftX: 180,
+        topLeftY: 50,
+        topRightX: 580,
+        topRightY: 50,
+        bottomLeftX: 180,
+        bottomLeftY: 555,
+        bottomRightX: 580,
+        bottomRightY: 555
+    }, {
+        featureName: 'leftNav',
+        topLeftX: 0,
+        topLeftY: 92,
+        topRightX: 240,
+        topRightY: 92,
+        bottomLeftX: 0,
+        bottomLeftY: 790,
+        bottomRightX: 240,
+        bottomRightY: 790
     }];
 
     for(featureData of featureBoundaryData){

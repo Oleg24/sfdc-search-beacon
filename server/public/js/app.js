@@ -14,6 +14,10 @@
             name: 'searchSuggestions',
             label: 'Instant Results',
             image: 'searchSuggestions.png'
+        }, {
+            name: 'leftNav',
+            label: 'Left Navigation',
+            image: 'leftNav.png'
         }]
     };
 

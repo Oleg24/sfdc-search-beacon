@@ -1,5 +1,6 @@
 let express = require('express');
 let connectDb = require('./models/models');
+let path = require('path');
 const bodyParser = require('body-parser');
 let dbConnection;
 
@@ -13,12 +14,19 @@ let getClickHeatMapData = require('./services/clickHeatMapDataService');
 let app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname + '/public'));
+app.use('/assets', [
+    express.static(path.join(__dirname, '../node_modules/jquery/dist/')),
+    express.static(__dirname + '/public/js/'),
+    express.static(__dirname + '/public/css/'),
+]);
+
 
 /**
  * Routes
  */
 app.get('/', (req, res) => {
-    res.send('hello sfdc');
+    res.sendFile(__dirname + '../public/index.html');
 });
 
 app.get('/api/heatMap/:region', function(req, res){

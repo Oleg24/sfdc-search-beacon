@@ -11,9 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
+    "jquery": "^3.4.1",
     "mongodb": "^3.4.0",
     "mongoose": "^5.8.1",
-    "set-clustering": "^1.0.1"
+    "set-clustering": "^1.0.1",
+    "skeleton-css": "^2.0.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

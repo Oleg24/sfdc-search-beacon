@@ -38,7 +38,7 @@ const port = 3000;
 connectDb().then((db, err) => {
     dbConnection = db;
     // Uncomment the following if you need to seed either collection
-    // seedFeatureBoundary();
+    seedFeatureBoundary();
     // seedRecordPreviewClicks();
     app.listen(port, ()=> {
         console.log("SFDC Beacon app listening at port: ", port);

@@ -2,6 +2,8 @@ let mongoose = require('mongoose');
 
 const recordPreviewClicksSchema = new mongoose.Schema({
     coordinates: String, // (x,y)
+    x: Number, 
+    y: Number,
     value: Number
 });
 

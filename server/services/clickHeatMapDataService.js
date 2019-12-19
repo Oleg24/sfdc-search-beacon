@@ -1,9 +1,13 @@
 let RecordPreviewClicks = require('../models/recordPreviewClicks');
 let SearchSuggestionClicks = require('../models/searchSuggestionClicks');
+let LeftNavClicks = require('../models/leftNavClicks');
+let FeatureBoundary = require('../models/featureBoundary');
+let helpers = require('../helpers/helpers');
 
 const regionCollectionMap = {
     'recordPreview': RecordPreviewClicks,
     'searchSuggestions': SearchSuggestionClicks,
+    'leftNav': LeftNavClicks
 };
 
 function getClickHeatMapData(req, res){
@@ -14,7 +18,12 @@ function getClickHeatMapData(req, res){
         res.send("no heat map for this region")
     } else {
         collection.find({}, function(err, clickData){
-            res.send(clickData);
+            FeatureBoundary.find({ featureName: region }, 'topLeftX topLeftY', function(err, boundaries){
+                var normalizedData = helpers.normalizeData(clickData, boundaries[0]);
+                var clusteredData = helpers.clusterValues(normalizedData);
+                res.send(clusteredData);
+            });
+            
         });
     }
 }

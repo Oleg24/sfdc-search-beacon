@@ -1,13 +1,15 @@
 let RecordPreviewClicks = require('../models/recordPreviewClicks');
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
-  }
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 function generateRandomCoordinate(){
    return {
-       x: getRandomInt(500),
-       y: getRandomInt(500)
+       x: getRandomInt(585, 980),
+       y: getRandomInt(50, 555)
    }
 }
 
@@ -20,7 +22,9 @@ function seedRecordPreviewClicks(){
             coordinate: "(" + x + "," + y +")",
             x: x,
             y: y,
-            value: getRandomInt(50)
+            value: getRandomInt(1, 50),
+            windowWidth: 1440,
+            windowHeight: 798
         }
         recordPreviewClicksData.push(clickPoint);
     }
@@ -31,7 +35,7 @@ function seedRecordPreviewClicks(){
             if(err){ 
                 console.log('Error', err);
             } else {
-                console.log('record preview point ssaved!');
+                console.log('record preview point saved!');
             }
         });
     }

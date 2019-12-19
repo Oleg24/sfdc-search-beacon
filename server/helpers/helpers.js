@@ -1,58 +1,71 @@
-var cluster = require('set-clustering');
-
-function proximity(pointA, pointB){
-    var pixelProximity = 5;
-    var score = 0;
-    if(
-        pointA.x <= (pixelProximity + pointB.x) || 
-        pointA.x <= (pointB.x - pixelProximity) 
-    ) {
-        score += 1;
-    }
-    if(
-        pointA.y <= (pixelProximity + pointB.y) || 
-        pointA.y <= (pointB.y - pixelProximity) 
-    ) {
-        score += 1;
-    }
-    return score;
+// normalize respective to 0, 0
+function normalizeData(data, boundaries){
+    return data.map(function(point){
+        // point - { x, y, value, windowWidth, windowHeight }
+        var normalizedPoint = Object.assign(point, {
+            x: point.x - boundaries.topLeftX,
+            y: point.y - boundaries.topLeftY,
+        });
+        return normalizedPoint;
+    });
 }
 
-function clusterDataPoints(data){
-    var c = cluster(data, proximity)
-    return c
+function clusterValues(data, pixelProximity){
+    pixelProximity = pixelProximity || 5;
+    // sort in ascending value based on x 
+    data = data.sort(function(pointA, pointB){
+        return pointA.x - pointB.x;        
+    });  
+
+    var xClustered = [];   
+    // cluster by x value
+    var clusterCount = 0;
+    data.forEach(function(point, idx){
+        var clustered = false;
+        if(idx != 0){
+            var previousPoint = xClustered[idx - 1 - clusterCount];
+            if((point.x - previousPoint.x) < pixelProximity){
+                // if the previous point is within the pixel proximity
+                // combine their values 
+                clustered = true;
+                clusterCount += 1;
+                previousPoint.value += point.value;
+            } 
+        }
+
+        if(!clustered){
+            // else just push to cluster
+            xClustered.push(point);
+        }
+    });
+
+    var yClustered = []; 
+    // reset cluster count
+    clusterCount = 0;  
+    // cluster by y value
+    xClustered.forEach(function(point, idx){
+        var clustered = false;
+        if(idx != 0){
+            var previousPoint = xClustered[idx - 1 - clusterCount];
+            if((point.y - previousPoint.y) < pixelProximity){
+                // if the previous point is within the pixel proximity
+                // combine their values 
+                clustered = true;
+                clusterCount += 1;
+                previousPoint.value += point.value;
+            }
+        }
+        if(!clustered){
+            // else just push to cluster
+            yClustered.push(point);
+        }
+    });
+
+    // return x y clustered points
+    return yClustered;
 }
 
-
-
-// function clusterValues(data){
-//     // sort the data based on x value
-//     data.sort(function(pointA, pointB){
-//         return pointA.x < pointB.x;        
-//     });  
-//     var xClustered = [];   
-//     // cluster by x value
-//     data.forEach(function(clickData, idx){
-//         if(idx != 0){
-            
-//         }
-//     });
-
-//     var clusteredData = [];
-//     var clusterSize = 5;
-//     // x coordinate: { value, y coordinate}
-//     var seenX = {};
-//     // y coordinate: { value, x coordinate}
-//     var seenY = {};
-//     data.forEach(function(point){
-//         // point { x, y, value }
-//         for(var x in seenX){
-//             if(point.x){
-
-//             }
-//         }
-//     });
-// }
-
-
-module.exports = clusterDataPoints;
+module.exports = {
+    normalizeData,
+    clusterValues
+};

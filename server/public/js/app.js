@@ -39,16 +39,20 @@
             radius: 100,
             maxOpacity: .5
         });
+
+        // sort data to get the min and max
+        var sortedData = apiData.sort(function(a, b){
+            return a.value - b.value;
+        });
             
         var data = {
-            min: 0,
-            max: 50,
+            min: sortedData[0].value,
+            max: sortedData[sortedData.length - 1].value,
             data: apiData
         };
           
         heatmapInstance.setData(data);     
     }
-
 
     // init functionality 
     function createNavigationList(){
@@ -69,12 +73,20 @@
         if(currentRegion === region){
             return; 
         }
+
+        // update current region
+        currentRegion = region;
+
         // clear whatever is on the right 
         const heatmapContainer = document.getElementById('heatmapContainer');
         heatmapContainer.innerHTML = "";
+        // hide the about 
+        $('#about-container').hide();
 
         // if about, show about 
-            // TODO handle the about logic
+        if(region === 'about'){
+            showAboutRegion();
+        }
 
         // add spinner
         // fetch data for the region
@@ -106,8 +118,8 @@
         $('#heatmapContainer').width(width);
     }
 
-    function createAbout(){
-
+    function showAboutRegion(){
+        $('#about-container').show();
     }
 
     init();

@@ -7,15 +7,15 @@
             label: 'About',
             image: null
         }, {
-            name: 'recordPreview',
+            apiName: 'recordPreview',
             label: 'Record Preview',
             image: 'recordPreview.png' 
         }, {
-            name: 'searchSuggestions',
+            apiName: 'searchSuggestions',
             label: 'Instant Results',
             image: 'searchSuggestions.png'
         }, {
-            name: 'leftNav',
+            apiName: 'leftNav',
             label: 'Left Navigation',
             image: 'leftNav.png'
         }]
@@ -54,13 +54,22 @@
         heatmapInstance.setData(data);     
     }
 
+    function renderLegend(data){
+        if(data){
+            let toolTip = `Showing data for ${currentRegion}, based on ${data.length} data points`;
+            let toolTipElem = $("<div class='legend'>");
+            toolTipElem.append(toolTip);
+            toolTipElem.appendTo('#heatmapContainer');
+        }
+    }
+
     // init functionality 
     function createNavigationList(){
         var list = document.getElementById('navigationList');
         constants.navigationRegions.forEach(function(region){
             let li = document.createElement('li');
             li.onclick = function(){
-                navigateToRegion(region.name);
+                navigateToRegion(region);
             }
             list.appendChild(li);
 
@@ -70,12 +79,12 @@
 
     function navigateToRegion(region){
         // navigated to same region.
-        if(currentRegion === region){
+        if(currentRegion === region.label){
             return; 
         }
 
         // update current region
-        currentRegion = region;
+        currentRegion = region.label;
 
         // clear whatever is on the right 
         const heatmapContainer = document.getElementById('heatmapContainer');
@@ -84,13 +93,13 @@
         $('#about-container').hide();
 
         // if about, show about 
-        if(region === 'about'){
+        if(currentRegion === 'About'){
             showAboutRegion();
+            return;
         }
 
-        // add spinner
         // fetch data for the region
-        fetchClickData(region, fetchClickDataCallback);
+        fetchClickData(region.apiName, fetchClickDataCallback);
     }
     
     function fetchClickDataCallback(region, data){
@@ -109,7 +118,8 @@
             var width = $('#heatMapImage').width();
             updateHeatMapContainerSize(height, width);
             // render the heat map
-            renderHeatMap(data);    
+            renderHeatMap(data); 
+            renderLegend(data);   
         }, 20) // not proud of this :( 
     }
 

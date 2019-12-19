@@ -11,14 +11,15 @@ function normalizeData(data, boundaries){
 }
 
 function clusterValues(data, pixelProximity){
-    pixelProximity = pixelProximity || 5;
+    pixelProximity = pixelProximity || 2;
+    
     // sort in ascending value based on x 
     data = data.sort(function(pointA, pointB){
         return pointA.x - pointB.x;        
     });  
 
-    var xClustered = [];   
     // cluster by x value
+    var xClustered = [];   
     var clusterCount = 0;
     data.forEach(function(point, idx){
         var clustered = false;
@@ -38,6 +39,11 @@ function clusterValues(data, pixelProximity){
             xClustered.push(point);
         }
     });
+
+    // sort in ascending value based on y 
+    xClustered = xClustered.sort(function(pointA, pointB){
+        return pointA.y - pointB.y;        
+    });  
 
     var yClustered = []; 
     // reset cluster count

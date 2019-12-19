@@ -1,11 +1,13 @@
 let RecordPreviewClicks = require('../models/recordPreviewClicks');
 let SearchSuggestionClicks = require('../models/searchSuggestionClicks');
+let LeftNavClicks = require('../models/leftNavClicks');
 let FeatureBoundary = require('../models/featureBoundary');
 let helpers = require('../helpers/helpers');
 
 const regionCollectionMap = {
     'recordPreview': RecordPreviewClicks,
     'searchSuggestions': SearchSuggestionClicks,
+    'leftNav': LeftNavClicks
 };
 
 function getClickHeatMapData(req, res){
@@ -18,7 +20,8 @@ function getClickHeatMapData(req, res){
         collection.find({}, function(err, clickData){
             FeatureBoundary.find({ featureName: region }, 'topLeftX topLeftY', function(err, boundaries){
                 var normalizedData = helpers.normalizeData(clickData, boundaries[0]);
-                res.send(normalizedData);
+                var clusteredData = helpers.clusterValues(normalizedData);
+                res.send(clusteredData);
             });
             
         });

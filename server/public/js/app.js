@@ -39,16 +39,20 @@
             radius: 100,
             maxOpacity: .5
         });
+
+        // sort data to get the min and max
+        var sortedData = apiData.sort(function(a, b){
+            return a.value - b.value;
+        });
             
         var data = {
-            min: 0,
-            max: 50,
+            min: sortedData[0].value,
+            max: sortedData[sortedData.length - 1].value,
             data: apiData
         };
           
         heatmapInstance.setData(data);     
     }
-
 
     // init functionality 
     function createNavigationList(){

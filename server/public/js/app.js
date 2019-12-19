@@ -1,4 +1,5 @@
 (function(){
+    var currentRegion = null;
     var constants = {
         apiUrl: '/api/heatMap/',
         navigationRegions: [{
@@ -60,6 +61,10 @@
     }
 
     function navigateToRegion(region){
+        // navigated to same region.
+        if(currentRegion === region){
+            return; 
+        }
         // clear whatever is on the right 
         const heatmapContainer = document.getElementById('heatmapContainer');
         heatmapContainer.innerHTML = "";
@@ -73,14 +78,28 @@
     }
     
     function fetchClickDataCallback(region, data){
+        // create image element and append to container
         const imageUrl = '/images/' + region + '.png';
         var imageElement = $('<img id="heatMapImage">');
         imageElement.attr('src', imageUrl);
         imageElement.attr('class', 'heat-map-image');
         imageElement.appendTo('#heatmapContainer');
+
         // remove spinner
-        // draw the heat map based on the data
-        renderHeatMap(data);    
+        // async so that browser has time to render the image and calculate height
+        setTimeout(function(){
+            // update the container based on image size
+            var height = $('#heatMapImage').height();
+            var width = $('#heatMapImage').width();
+            updateHeatMapContainerSize(height, width);
+            // render the heat map
+            renderHeatMap(data);    
+        }, 20) // not proud of this :( 
+    }
+
+    function updateHeatMapContainerSize(height, width){
+        $('#heatmapContainer').height(height);    
+        $('#heatmapContainer').width(width);
     }
 
     function createAbout(){

@@ -5,6 +5,11 @@ header {
     padding: 5px;
 }
 
+.logo {
+    height: 40px;
+    width: 40px;
+}
+
 .header-title {
     color: whitesmoke;
 }

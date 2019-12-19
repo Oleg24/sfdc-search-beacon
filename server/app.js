@@ -7,8 +7,8 @@ let dbConnection;
 let seedFeatureBoundary = require('./misc/seedFeatureBoundary');
 let seedRecordPreviewClicks = require('./misc/seedRecordPreviewClicks');
 
-// helpers
-let getClickHeatMapData = require('./helpers/clickHeatMapData');
+// services
+let getClickHeatMapData = require('./services/clickHeatMapDataService');
 
 let app = express();
 app.use(bodyParser.json());

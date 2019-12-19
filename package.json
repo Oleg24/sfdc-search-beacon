@@ -12,7 +12,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "mongodb": "^3.4.0",
-    "mongoose": "^5.8.1"
+    "mongoose": "^5.8.1",
+    "set-clustering": "^1.0.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

@@ -1,15 +1,14 @@
-let mongoose = require('mongodb');
-let appConstants = require('../constants');
 let RecordPreviewClicks = require('../models/recordPreviewClicks');
+let SearchSuggestionClicks = require('../models/searchSuggestionClicks');
 
 const regionCollectionMap = {
-    'recordPreview': RecordPreviewClicks
+    'recordPreview': RecordPreviewClicks,
+    'searchSuggestions': SearchSuggestionClicks
 };
 
 function getClickHeatMapData(req, res){
     const region = req.params.region;
     const collection = regionCollectionMap[region];
-    console.log(collection)
     if(!collection){
         res.status(404);
         res.send("no heat map for this region")

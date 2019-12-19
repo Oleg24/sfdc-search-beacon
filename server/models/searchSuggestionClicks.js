@@ -5,8 +5,8 @@ const searchSuggestionClicksSchema = new mongoose.Schema({
     value: Number
 });
 
-const SearchSuggestionClicks = mongoose.Model(
-    'searchSuggestionClicks', 
+const SearchSuggestionClicks = mongoose.model(
+    'SearchSuggestionClicks', 
     searchSuggestionClicksSchema
 );
 

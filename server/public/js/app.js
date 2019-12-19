@@ -74,6 +74,9 @@
             return; 
         }
 
+        // update current region
+        currentRegion = region;
+
         // clear whatever is on the right 
         const heatmapContainer = document.getElementById('heatmapContainer');
         heatmapContainer.innerHTML = "";

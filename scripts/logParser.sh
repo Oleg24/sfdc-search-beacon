@@ -41,9 +41,14 @@ if [ -z "$1" ]; then
  echo "No log file supplied... exiting."
 
 else
+  LINE_NUMBER=0;
   while true; do
-    result=$(cat $SOURCE_LOG_URL | grep '.*Search-Beacon.*');
-    echo "Parsing the logs..."
+    echo "reading from line number $LINE_NUMBER";
+    result="$(tail -n ${LINE_NUMBER} $SOURCE_LOG_URL | grep '.*Search-Beacon.*')";
+    echo "Parsing the logs...";
+
+    LINE_NUMBER='+'$(wc -l < $SOURCE_LOG_URL);
+    LINE_NUMBER=$(echo $LINE_NUMBER | tr -d ' ')
 
     echo "$result" | \
     while IFS= read -r line; do
@@ -67,6 +72,7 @@ else
             echo "$line doesn't match" >&2 # this could get noisy if there are a lot of non-matching logs
         fi
     done
+
     sleep 10;
   done
 fi
